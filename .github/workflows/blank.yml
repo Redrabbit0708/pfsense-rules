@@ -1,0 +1,28 @@
+name: Build & Release Suricata Rules
+
+on:
+  push:            # 每次 push 就重打包
+    branches: [ main ]
+  workflow_dispatch:     # 亦可在 UI 手動觸發
+
+permissions:
+  contents: write        # 讓 Action 可以更新 Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pack *.rules → tar.gz
+        run: tar -czf customrules.tar.gz rules
+
+      - name: Publish/Update “latest” Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest           # 關鍵：永遠覆寫同一 tag
+          name: Suricata Custom Rules
+          files: customrules.tar.gz  # 上傳的檔案列表 (可多行 )
+          make_latest: true          # 確保標成最新
+
