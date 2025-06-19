@@ -23,6 +23,6 @@ jobs:
         with:
           tag_name: latest           # 關鍵：永遠覆寫同一 tag
           name: Suricata Custom Rules
-          files: customrules.tar.gz  # 上傳的檔案列表 (可多行 )
+          files: testrules.tar.gz  # 上傳的檔案列表 (可多行 )
           make_latest: true          # 確保標成最新
 
